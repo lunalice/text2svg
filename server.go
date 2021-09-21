@@ -32,21 +32,14 @@ func MainPage() echo.HandlerFunc {
 	}
 }
 
-func show(c echo.Context) error {
-	u := new(Request)
-	if err := c.Bind(u); err != nil {
-		return err
-	}
-	return c.Render(http.StatusOK, "page1", "hello world")
-}
-
 func text2svg(request Request) string {
 	width := 500
 	height := 500
 	var temp bytes.Buffer
 	canvas := svg.New(&temp)
-	canvas.Start(500, 500)
-	canvas.Text(width/2, height/2, request.Area, "text-anchor:middle;font-size:30px;fill:white")
+	canvas.Start(width, height)
+	canvas.Roundrect(0, 0, 500, 500, 5, 5, "text-anchor:middle;font-size:30px;fill:blue")
+	canvas.Text(width/2, height/2, request.Area, "text-anchor:middle;font-size:30px;fill:black")
 	canvas.End()
 	return temp.String()
 }
